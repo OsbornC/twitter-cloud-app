@@ -19,10 +19,10 @@ import './App.css';
 const handelLogin = ()=>{
   const doc = 'SalesOrder1'
   const number = 'Account1'
-  // axios.get(`https://clooud-project-twitter-app.azurewebsites.net?name=${name}`).then((obj) => {
-  //   console.log('login', obj)
-  // })
-  axios.get(`http://127.0.0.1:5000/read`, {params: {
+  axios.get(`https://clooud-project-twitter-app.azurewebsites.net/box_office_top_movies`).then((obj) => {
+    console.log('box_office_top_movies', obj)
+  })
+  axios.get(`https://clooud-project-twitter-app.azurewebsites.net/read`, {params: {
     doc_id: doc,
     account_number: number
   }}).then((obj) => {
