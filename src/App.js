@@ -12,6 +12,8 @@ import {
   TwitterOnAirButton
 } from 'react-twitter-embed';
 
+import IMDB from './components/IMDB';
+
 import logo from './logo.svg';
 import axios from 'axios';
 import './App.css';
@@ -35,7 +37,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <IMDB />
+        {/* <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -46,8 +49,8 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React
-        </a>
-        <TwitterTweetEmbed
+        </a> */}
+        {/* <TwitterTweetEmbed
           tweetId={'1514813553177362434'}
           options={{ height: 800 }}
         />
@@ -58,7 +61,7 @@ function App() {
         />
         <TwitterHashtagButton
           tag={'imdb'}
-        />
+        /> */}
       </header>
     </div>
   );
