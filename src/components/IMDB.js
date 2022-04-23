@@ -41,7 +41,7 @@ export default class IMDB extends React.Component {
         if (movie_list.length > 0) {
             console.log(movie_list)
             const listItems = movie_list.map((movie) =>
-                <li>
+                <li key={movie['id']}>
                     {
                         <div>
                             <p>{movie['title']}</p>
