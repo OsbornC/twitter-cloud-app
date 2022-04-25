@@ -1,0 +1,252 @@
+/* global variables */
+:root {
+    --border-size: 0.125rem;
+    --duration: 250ms;
+    --ease: cubic-bezier(0.215, 0.61, 0.355, 1);
+    /*--font-family: Averia Serif Libre;*/
+    --font-family: monospace;
+    --color-primary: white;
+    --color-secondary: black; 
+    --color-tertiary: grey;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --space: 1rem;
+    --amplify-primary-color: black;
+  }
+
+  .text{
+      color: grey;
+  }
+
+  .content {
+    display: flex;
+    text-decoration: none; 
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content img {
+    margin-right: 10px;
+    display: block;
+  }
+
+  .content p {
+      margin: 0;
+   }
+
+  /* applied to all buttons */
+  .multi-button {
+    height: auto;
+    width: auto;
+    display: flex;
+    margin-top: 6vh;
+    justify-content: center;
+    place-items: center;
+    align-items: center;
+  
+    /* THIS IS NEEDED IF YOU WANT THE AABIX LOGO TO STAY AT THE TOP OF EVERYTHING
+       ELSE WHEN YOU WRAP. Ex: Right now, sign out moves to the bottom, however, 
+       can be used to make the navbar and signout move to the bottom, while the 
+       logo stays at the top. */
+    flex-wrap: wrap-reverse;
+    flex-direction: row-reverse;
+  }
+  
+  /* Insight stuff */
+  .multi-button body {
+    align-items: center;
+    height: 100vh;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    padding: calc(var(--space) * 2);
+    max-width: 700px;
+  }
+  
+  /* button attributes */
+  .multi-button button {
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(255, 255, 255);
+    font-size: 2.22vh;
+    font-family: var(--font-family);
+    width: auto;
+    border: none;
+    font-weight: bolder;
+    align-items: center;
+  }
+  
+  .icon img{
+    cursor: pointer;
+    position: relative;
+    display: block;
+    margin-right: .5vw;
+    /*border-color: green;
+    border-style: dashed;*/
+    object-fit: contain;
+    height: 2.22vh;
+    width: 2.22vh;
+    
+  }
+  
+  .logo{
+    display: flex;
+    margin-left: 4vw;
+    order: 3;
+  }
+  
+  .logo img{
+    cursor: default;
+    display: flex;
+    align-items: center;
+    object-fit: cover;
+    height: 3.52vh;
+  }
+  
+  .sign-out{
+    cursor: pointer;
+    display:flex;
+    align-items: center;
+    margin-right: 4.8vw;
+    width: auto;
+    order: 2;
+  }
+  
+  .sign-out button{
+    display: flex;
+    color: rgb(255, 255, 255);
+    background-color: #282F3E;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+    font-size: 1.15vw;
+    border-radius: 1vh;
+    font-size: 2.22vh;
+    width: 16vh;
+    height: 5vh;
+  }
+  
+  
+  .multi-button + button {
+    margin-right: 5vh;
+  }
+  
+  .multi-button button + button {
+    margin-right: 5vh;
+  }
+  
+  
+  .sign-out button:hover,
+  .sign-out button:focus {
+    color: white;
+    border: .1vw solid rgb(44, 178, 255);
+  }
+  
+  .icon-button {
+    display:flex; 
+    margin-right: 8vw;
+    align-items: center;
+    order: 2;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
+  
+  
+  .icon-button .icon{
+    opacity: 50%;
+  }
+  
+  
+  .icon-button:hover .icon{
+    opacity: 80%;
+  }
+   
+  .icon-button:focus .icon{
+    opacity: 100%;
+  }
+  
+  .navbar{
+    display: flex;
+    order: 1;
+    margin-left: 20vw;
+    margin-right: 9vw;
+  }
+  
+  .mobile-button{
+    position: absolute;
+    right: 5vh;
+    top: 6.5vh;
+    display: none;
+  }
+  
+  .mobile-button:hover{
+    background-color:rgb(0, 0, 0, .25);
+    border-radius: 1 vh;
+  }
+  
+  .nav{
+    top: 0;
+    display: flex;
+    order: 2;
+    
+  }
+  
+  @media screen and (max-width: 700px){
+    .multi-button {
+        flex-direction: column;
+        height: auto;
+    }
+    .navbar{
+      display: flex;
+      flex-direction: column;
+      order: 1;
+    }
+    
+  
+    .multi-button{
+      justify-content: center;
+      align-items: center;
+    }
+    .logo{
+      order: 1;
+      margin-bottom: 3vh;
+    }
+    .sign-out{
+      order: 2;
+      width: auto;
+      
+      align-items: center;
+      justify-content: center;
+      margin: 0px;
+    }
+    .sign-out button{
+      background-color: white;
+      color: rgba(0, 0, 0, 0.5);
+      font-weight: bold;
+      text-transform: capitalize;
+      order: 2;
+    }
+  
+    .sign-out button:hover {
+      border-bottom: 1px solid rgb(0, 0, 0, .25);
+    }
+    
+    .nav{
+      
+    flex-direction: column;
+    }
+  
+    .sign-out button:focus {
+      border-bottom: 1px solid rgb(0, 0, 0, .5);
+    }
+    .sign-out button:hover,
+    .sign-out button:focus {
+      color: rgba(0, 0, 0, 0.5);
+      border: none;
+    }
+    
+    .mobile-button{
+      display: block;
+    }
+   
+  }
