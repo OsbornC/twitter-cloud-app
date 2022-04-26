@@ -1,0 +1,27 @@
+.dashboardcontainer{
+    background-color: #c3c5c7;
+    width: 300px;
+    height: 370px;
+    border-radius: 17px;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+
+.imageContainer{
+    width: 300px;
+    height: 370px;
+    display: flex;
+    align-items: center;
+    margin-left: 10.49%;
+}
+
+image{
+    width: 199px;
+    height: 330px;
+}
+
+.descriptionContainer{
+    width: 300px;
+    text-align: center;
+    margin-left: 100px;
+}

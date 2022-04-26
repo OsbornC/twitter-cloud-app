@@ -1,0 +1,14 @@
+li {
+    list-style-type : '';
+}
+
+.leftContainer {
+    width:40%; 
+    float:left;
+}
+
+.rightContainer {
+    margin-top: 80px;
+    width:40%; 
+    float:right;
+}
