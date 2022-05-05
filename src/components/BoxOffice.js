@@ -81,15 +81,15 @@ export default class BoxOffice extends React.Component {
                             }
                         </List>
                     </div>
-                    <div>
-                        <List component={Stack} direction="row">
+                    <div className='tweetContainer'>
+                        <List component={Stack} direction="column">
                             {
                                 tweetIDs.map((tweetID) => (
                                     <ListItem key={tweetID}>
                                         <div key={tweetID}>
                                             <TwitterTweetEmbed
                                                 tweetId={tweetID}
-                                                options={{ height: 400, outerWidth: 200 }}
+                                                options={{ height: 400, width: 1000 }}
                                             />
                                         </div>
                                     </ListItem>
