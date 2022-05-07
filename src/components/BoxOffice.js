@@ -17,6 +17,7 @@ import { Stack, List, ListItem } from '@mui/material';
 import axios from 'axios';
 
 import DashboardCard from './DashboardCard/DashboardCard';
+import FetchTweetsButton from './FetchTweetsButton/FetchTweetsButton';
 import Spinner from './Loader/Spinner';
 
 // CSS
@@ -29,7 +30,8 @@ export default class BoxOffice extends React.Component {
             movie_list: [],
             selectedMovieID: '',
             tweetIDs: [],
-            loaded: false
+            loaded: false,
+            showButton: false
         };
     }
 
@@ -39,18 +41,43 @@ export default class BoxOffice extends React.Component {
                 let movie_list = obj['data']['movie_list']
                 this.setState({ selectedMovieID: movie_list[0]['id'] })
                 this.setState({ movie_list: movie_list });
-            })
-        let url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + this.state.selectedMovieID;
+            });
+        const url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + this.state.selectedMovieID;
         await axios.get(url)
             .then((obj) => {
                 this.setState({ tweetIDs: obj['data']['movie_list'] });
-            })
+            });
         this.setState({ loaded: true });
+
+        this.checkNewTweets();
+        this.checkNewTweets = this.checkNewTweets.bind(this);
+        setInterval(this.checkNewTweets, 3000);
+    }
+
+    checkNewTweets = async () => {
+        const url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + this.state.selectedMovieID;
+        await axios.get(url)
+            .then((obj) => {
+                if (this.state.tweetIDs[0] !== obj['data']['movie_list'][0]) {
+                    console.log('tweet ID check', this.state.tweetIDs[0], obj['data']['movie_list'][0])
+                    this.setState({ showButton: true });
+                } 
+            });
+    }
+
+    fetchNewTweets = async () => {
+        this.setState({ showButton: false });
+        const url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + this.state.selectedMovieID;
+        await axios.get(url)
+            .then((obj) => {
+                this.setState({ tweetIDs: obj['data']['movie_list'] });
+            });
     }
 
     changeMovieID = async (movieID) => {
         this.setState({ loaded: false });
         let url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + movieID;
+        
         await axios.get(url)
             .then((obj) => {
                 this.setState({ selectedMovieID: movieID })
@@ -81,6 +108,7 @@ export default class BoxOffice extends React.Component {
                             }
                         </List>
                     </div>
+                    <FetchTweetsButton handleClick={() => this.fetchNewTweets()} showButton={this.state.showButton}></FetchTweetsButton>
                     <div>
                         <List component={Stack} direction="row">
                             {
