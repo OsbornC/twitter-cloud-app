@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Spinner from './components/Loader/Spinner';
 import BoxOffice from './components/BoxOffice';
+import TopRated from './components/TopRated';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./Button.css";
 
@@ -26,6 +27,7 @@ const Home = (props) => {
                     <Routes>
                         <Route path="/" element={<BoxOffice />} />
                         <Route path="/top_box_office" element={<BoxOffice />} />
+                        <Route path="/top_rated" element={<TopRated />} />
                     </Routes>
                 </BrowserRouter>
                 <div className='footer'></div>
