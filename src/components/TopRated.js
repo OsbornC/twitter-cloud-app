@@ -42,11 +42,11 @@ export default class TopRated extends React.Component {
                 this.setState({ selectedMovieID: movie_list[0]['id'] })
                 this.setState({ movie_list: movie_list });
             });
-        // const url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + this.state.selectedMovieID;
-        // await axios.get(url)
-        //     .then((obj) => {
-        //         this.setState({ tweetIDs: obj['data']['movie_list'] });
-        //     });
+        const url = `https://twitter-imdb-cloud-app.azurewebsites.net/top_movie_related_tweets?movie_id=` + this.state.selectedMovieID;
+        await axios.get(url)
+            .then((obj) => {
+                this.setState({ tweetIDs: obj['data']['movie_list'] });
+            });
         this.setState({ loaded: true });
 
         // this.checkNewTweets();
@@ -55,7 +55,7 @@ export default class TopRated extends React.Component {
     }
 
     checkNewTweets = async () => {
-        const url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + this.state.selectedMovieID;
+        const url = `https://twitter-imdb-cloud-app.azurewebsites.net/top_movie_related_tweets?movie_id=` + this.state.selectedMovieID;
         await axios.get(url)
             .then((obj) => {
                 if (this.state.tweetIDs[0] !== obj['data']['movie_list'][0]) {
@@ -67,7 +67,7 @@ export default class TopRated extends React.Component {
 
     fetchNewTweets = async () => {
         this.setState({ showButton: false });
-        const url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + this.state.selectedMovieID;
+        const url = `https://twitter-imdb-cloud-app.azurewebsites.net/top_movie_related_tweets?movie_id=` + this.state.selectedMovieID;
         await axios.get(url)
             .then((obj) => {
                 this.setState({ tweetIDs: obj['data']['movie_list'] });
@@ -76,7 +76,7 @@ export default class TopRated extends React.Component {
 
     changeMovieID = async (movieID) => {
         this.setState({ loaded: false });
-        let url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + movieID;
+        let url = `https://twitter-imdb-cloud-app.azurewebsites.net/top_movie_related_tweets?movie_id=` + movieID;
         
         await axios.get(url)
             .then((obj) => {
