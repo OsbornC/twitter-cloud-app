@@ -12,3 +12,7 @@ li {
     width:40%; 
     float:right;
 }
+
+.textCenter {
+    text-align: center;
+}

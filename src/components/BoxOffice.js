@@ -30,6 +30,7 @@ export default class BoxOffice extends React.Component {
             movie_list: [],
             selectedMovieID: '',
             tweetIDs: [],
+            etags: [],
             loaded: false,
             showButton: false
         };
@@ -46,6 +47,7 @@ export default class BoxOffice extends React.Component {
         await axios.get(url)
             .then((obj) => {
                 this.setState({ tweetIDs: obj['data']['movie_list'] });
+                this.setState({ etags: obj['data']['etags'] });
             });
         this.setState({ loaded: true });
 
@@ -71,6 +73,7 @@ export default class BoxOffice extends React.Component {
         await axios.get(url)
             .then((obj) => {
                 this.setState({ tweetIDs: obj['data']['movie_list'] });
+                this.setState({ etags: obj['data']['etags'] });
             });
     }
 
@@ -82,12 +85,13 @@ export default class BoxOffice extends React.Component {
             .then((obj) => {
                 this.setState({ selectedMovieID: movieID })
                 this.setState({ tweetIDs: obj['data']['movie_list'] });
+                this.setState({ etags: obj['data']['etags'] });
             })
         this.setState({ loaded: true });
     }
 
     render() {
-        const { loaded, movie_list, tweetIDs } = this.state;
+        const { loaded, movie_list, tweetIDs, etags } = this.state;
         if (!loaded) {
             return (
                 <Spinner />
@@ -122,6 +126,7 @@ export default class BoxOffice extends React.Component {
                                                     tweetId={tweetID}
                                                     options={{ height: 400, outerWidth: 200 }}
                                                 />
+                                                <p className='textCenter'>Emoji Sentiment: {etags[tweetIDs.indexOf(tweetID)]}</p>
                                             </div>
                                         </ListItem>
                                     ))
