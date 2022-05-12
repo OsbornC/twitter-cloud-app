@@ -114,7 +114,7 @@ export default class TopRated extends React.Component {
                             </List>
                         </Paper>
                     </div>
-                    <FetchTweetsButton handleClick={() => this.fetchNewTweets()} showButton={this.state.showButton}></FetchTweetsButton>
+                    <h2 className='textCenter'>Top Trending Tweets</h2>
                     <div>
                         <Paper style={{ maxHeight: 600, overflow: 'auto' }}>
                             <List component={Stack} direction="row">
