@@ -44,7 +44,7 @@ export default class BoxOffice extends React.Component {
                 this.setState({ selectedMovieID: movie_list[0]['id'] })
                 this.setState({ movie_list: movie_list });
             });
-        const emotion_url = `http://127.0.0.1:5000/movie_related_tweets_emojis?movie_id=` + this.state.selectedMovieID
+        const emotion_url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets_emojis?movie_id=` + this.state.selectedMovieID
         await axios.get(emotion_url)
             .then((obj) => {
                 const pieChartData = [
@@ -106,7 +106,7 @@ export default class BoxOffice extends React.Component {
             })
         this.setState({ loaded: true });
 
-        const emotion_url = `http://127.0.0.1:5000/movie_related_tweets_emojis?movie_id=` + this.state.selectedMovieID
+        const emotion_url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets_emojis?movie_id=` + this.state.selectedMovieID
         await axios.get(emotion_url)
             .then((obj) => {
                 const pieChartData = [
