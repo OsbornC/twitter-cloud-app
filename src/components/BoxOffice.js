@@ -13,7 +13,7 @@ import {
     TwitterOnAirButton
 } from 'react-twitter-embed';
 import { Stack, List, ListItem, Paper } from '@mui/material';
-
+import DonutChart from 'react-donut-chart';
 import axios from 'axios';
 
 import DashboardCard from './DashboardCard/DashboardCard';
@@ -32,17 +32,34 @@ export default class BoxOffice extends React.Component {
             tweetIDs: [],
             etags: [],
             loaded: false,
-            showButton: false
+            showButton: false,
+            pieChartData: []
         };
     }
 
     async componentDidMount() {
         await axios.get(`https://twitter-imdb-cloud-app.azurewebsites.net/box_office_top_movies`)
             .then((obj) => {
-                let movie_list = obj['data']['movie_list']
+                const movie_list = obj['data']['movie_list']
                 this.setState({ selectedMovieID: movie_list[0]['id'] })
                 this.setState({ movie_list: movie_list });
             });
+        const emotion_url = `http://127.0.0.1:5000/movie_related_tweets_emojis?movie_id=` + this.state.selectedMovieID
+        await axios.get(emotion_url)
+            .then((obj) => {
+                const pieChartData = [
+                    {label: 'joy', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_joy"].toFixed(2))},
+                    {label: 'anger', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_anger"].toFixed(2))},
+                    {label: 'fear', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_fear"].toFixed(2))},
+                    {label: 'love', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_love"].toFixed(2))},
+                    {label: 'sadness', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_sadness"].toFixed(2))},
+                    {label: 'surprise', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_surprise"].toFixed(2))}
+                ]
+                
+                // const pieChartData = obj["data"]["sentiment_percentage"].map((val, i) => ({ label: val["label"], value: Number((val["score"] * 100).toFixed(2)) }));
+                this.setState({ pieChartData: [...pieChartData] })
+                console.log('pie,', this.state.pieChartData)
+            })
         const url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + this.state.selectedMovieID;
         await axios.get(url)
             .then((obj) => {
@@ -79,15 +96,32 @@ export default class BoxOffice extends React.Component {
 
     changeMovieID = async (movieID) => {
         this.setState({ loaded: false });
-        let url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + movieID;
+        const tweets_url = `https://twitter-imdb-cloud-app.azurewebsites.net/movie_related_tweets?movie_id=` + movieID;
 
-        await axios.get(url)
+        await axios.get(tweets_url)
             .then((obj) => {
                 this.setState({ selectedMovieID: movieID })
                 this.setState({ tweetIDs: obj['data']['movie_list'] });
                 this.setState({ etags: obj['data']['etags'] });
             })
         this.setState({ loaded: true });
+
+        const emotion_url = `http://127.0.0.1:5000/movie_related_tweets_emojis?movie_id=` + this.state.selectedMovieID
+        await axios.get(emotion_url)
+            .then((obj) => {
+                const pieChartData = [
+                    {label: 'joy', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_joy"].toFixed(2))},
+                    {label: 'anger', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_anger"].toFixed(2))},
+                    {label: 'fear', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_fear"].toFixed(2))},
+                    {label: 'love', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_love"].toFixed(2))},
+                    {label: 'sadness', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_sadness"].toFixed(2))},
+                    {label: 'surprise', value: Number(obj["data"]["sentiment_percentage"]["sentiments"]["senti_surprise"].toFixed(2))}
+                ]
+                
+                // const pieChartData = obj["data"]["sentiment_percentage"].map((val, i) => ({ label: val["label"], value: Number((val["score"] * 100).toFixed(2)) }));
+                this.setState({ pieChartData: [...pieChartData] })
+                console.log('pie,', this.state.pieChartData)
+            })
     }
 
     render() {
@@ -134,6 +168,9 @@ export default class BoxOffice extends React.Component {
                             </List>
                         </Paper>
                     </div>
+                    {<DonutChart
+                        data={this.state.pieChartData}
+                    />}
                 </div>
             )
         }
